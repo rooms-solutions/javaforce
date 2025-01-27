@@ -195,11 +195,11 @@ static void log_packet(const char* type, const AVFormatContext *fmt_ctx, const A
   char dur[AV_TS_MAX_STRING_SIZE];
   char dur_tb[AV_TS_MAX_STRING_SIZE];
 
-  printf("%s:pts:%s pts_time:%s dts:%s dts_time:%s duration:%s duration_time:%s\n", type,
+  /* printf("%s:pts:%s pts_time:%s dts:%s dts_time:%s duration:%s duration_time:%s\n", type,
     av_ts_make_string(pts, pkt->pts), av_ts_make_time_string(pts_tb, pkt->pts, time_base),
     av_ts_make_string(dts, pkt->dts), av_ts_make_time_string(dts_tb, pkt->dts, time_base),
     av_ts_make_string(dur, pkt->duration), av_ts_make_time_string(dur_tb, pkt->duration, time_base)
-  );
+  ); */
 }
 
 #ifndef _WIN32
@@ -216,7 +216,15 @@ static jboolean ffmpeg_init(const char* codecFile, const char* deviceFile, const
   , const char* utilFile, const char* scaleFile, const char* postFile, const char* resampleFile)
 {
   //load libraries (order is important)
-  printf("ffmpeg init...");
+  printf("ffmpeg init...\n");
+  printf("ffmpeg coded lib: %s\n", codecFile);
+  printf("ffmpeg device file: %s\n", deviceFile);
+  printf("ffmpeg filter file: %s\n", filterFile);
+  printf("ffmpeg formatFile: %s\n", formatFile);
+  printf("ffmpeg utilFile: %s\n", utilFile);
+  printf("ffmpeg scaleFile: %s\n", scaleFile);
+  printf("ffmpeg postFile: %s\n", postFile);
+  printf("ffmpeg resampleFile: %s\n", resampleFile);
 
   util = loadLibrary(utilFile);
   if (util == NULL) {

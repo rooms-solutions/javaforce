@@ -35,18 +35,22 @@ static JNINativeMethod javaforce_jni_JFNative[] = {
   {"free", "(Ljava/nio/ByteBuffer;)V", (void *)&Java_javaforce_jni_JFNative_free},
 };
 
+/*
 extern "C" void ni_register(JNIEnv *env);
 extern "C" void gl_register(JNIEnv *env);
 extern "C" void glfw_register(JNIEnv *env);
 extern "C" void font_register(JNIEnv *env);
 extern "C" void image_register(JNIEnv *env);
 extern "C" void camera_register(JNIEnv *env);
+*/
 extern "C" void ffmpeg_register(JNIEnv *env);
+/*
 extern "C" void videobuffer_register(JNIEnv *env);
 extern "C" void pcap_register(JNIEnv *env);
 extern "C" void cl_register(JNIEnv *env);
 extern "C" void gpio_register(JNIEnv *env);
 extern "C" void i2c_register(JNIEnv *env);
+*/
 
 void registerCommonNatives(JNIEnv *env) {
   jclass cls;
@@ -54,6 +58,7 @@ void registerCommonNatives(JNIEnv *env) {
   cls = findClass(env, "javaforce/jni/JFNative");
   registerNatives(env, cls, javaforce_jni_JFNative, sizeof(javaforce_jni_JFNative)/sizeof(JNINativeMethod));
 
+  /*
 #ifndef __FreeBSD__
   ni_register(env);
 #endif
@@ -69,9 +74,9 @@ void registerCommonNatives(JNIEnv *env) {
 #ifndef __FreeBSD__
   camera_register(env);
 #endif
-
+*/
   ffmpeg_register(env);
-
+/*
   videobuffer_register(env);
 
   pcap_register(env);
@@ -83,4 +88,15 @@ void registerCommonNatives(JNIEnv *env) {
 
   i2c_register(env);
 #endif
+*/
 }
+
+JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM *vm, void *reserved) {
+	JNIEnv *env;
+	vm->GetEnv(reinterpret_cast<void **>(&env), JNI_VERSION_1_8);
+
+	registerCommonNatives(env);
+
+	return JNI_VERSION_1_8;
+}
+
